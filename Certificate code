@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Certificate Generator</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaPn1x1klM+5FuGw0mR0HrO+knXAp+lV5rZEKjRVcsPYRsvqD9YOB29nY1rC3CD9aVbF+WoWoC5Mk6eMyE+9g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <style>
+    body { font-family: 'Adobe Clean', sans-serif; margin: 0; padding: 20px; background: #fff; }
+    .container { display: flex; flex-direction: row; gap: 20px; }
+    .form-panel {
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 20px;
+      background: #f9f9f9;
+      border-radius: 10px;
+    }
+    .form-panel label { font-weight: bold; font-size: 14px; }
+    .form-panel input, .form-panel select, .form-panel textarea {
+      padding: 8px;
+      font-size: 14px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    #downloadBtn {
+      background: #007bff;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    #downloadBtn:hover { background: #0056b3; }
+    .preview-panel {
+      width: 800px;
+      height: 400px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #ccc;
+      overflow: hidden;
+    }
+    #certImage {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0; left: 0;
+      z-index: 1;
+    }
+    .overlay {
+      position: absolute;
+      z-index: 2;
+      color: #000;
+    }
+    .profile-pic {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      position: absolute;
+      top: 30px;
+      left: 545px;
+      border: 2px solid white;
+      z-index: 2;
+    }
+    #certName {
+      top: 140px; left: 420px;
+      width: 320px;
+      text-align: center;
+      font-weight: bold;
+    }
+    #certDesc {
+      top: 170px; left: 435px;
+      width: 300px;
+      font-size: 12px;
+      text-align: left;
+    }
+    #certFrom {
+      bottom: 45px; left: 420px;
+      width: 320px;
+      font-size: 12px;
+      text-align: center;
+    }
+    #certDate {
+      bottom: 25px; left: 420px;
+      width: 320px;
+      font-size: 12px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="form-panel">
+      <label for="awardeeName">Awardee Name:</label>
+      <input type="text" id="awardeeName" placeholder="Enter recipient name" />
+
+      <label for="profilePic">Upload Profile Picture:</label>
+      <input type="file" id="profilePic" accept="image/*" />
+
+      <label for="awardType">Select appreciation card:</label>
+      <select id="awardType">
+        <option value="pillar">Pillar of Strength</option>
+        <option value="helping">Helping Hand</option>
+        <option value="shining">Shining Star</option>
+        <option value="wisdom">Beacon of Wisdom</option>
+        <option value="compass">Trusted Compass</option>
+        <option value="standard">True Standard-Bearer</option>
+        <option value="mentor">Guiding Mentor</option>
+        <option value="inspiration">Source of Inspiration</option>
+      </select>
+
+      <label for="description">Description:</label>
+      <textarea id="description" maxlength="490" placeholder="Note of appreciation"></textarea>
+
+      <label for="fromName">Your name:</label>
+      <input type="text" id="fromName" placeholder="Your name" />
+
+      <button id="downloadBtn">Preview & Save Certificate</button>
+    </div>
+
+    <div id="previewPanel" class="preview-panel">
+      <img id="certImage" crossorigin="anonymous" src="https://res.cloudinary.com/dkb0gpqsk/image/upload/v1748611741/Pillar_of_strength_mrkwxd.png" alt="Certificate Background" />
+      <img id="profilePreview" class="profile-pic" src="" alt="Profile Picture" style="display: none;" />
+      <div class="overlay" id="certName">Awardee Name</div>
+      <div class="overlay" id="certDesc">Description goes here...</div>
+      <div class="overlay" id="certFrom">Given by: Your Name</div>
+      <div class="overlay" id="certDate"></div>
+    </div>
+  </div>
+
+  <script>
+    const awardeeNameInput = document.getElementById("awardeeName");
+    const profilePicInput = document.getElementById("profilePic");
+    const awardTypeSelect = document.getElementById("awardType");
+    const descriptionInput = document.getElementById("description");
+    const fromNameInput = document.getElementById("fromName");
+    const certImage = document.getElementById("certImage");
+    const profilePreview = document.getElementById("profilePreview");
+    const certName = document.getElementById("certName");
+    const certDesc = document.getElementById("certDesc");
+    const certFrom = document.getElementById("certFrom");
+    const certDate = document.getElementById("certDate");
+
+    const certificateImages = {
+      pillar: "https://res.cloudinary.com/dkb0gpqsk/image/upload/v1748611741/Pillar_of_strength_mrkwxd.png",
+      helping: "https://res.cloudinary.com/dkb0gpqsk/image/upload/v1748611750/Helping_Hand_smnje4.png",
+      shining: "https://res.cloudinary.com/dkb0gpqsk/image/upload/v1748611751/Shining_star_qofg44.png",
+      wisdom: "https://res.cloudinary.com/dkb0gpqsk/image/upload/v1748611741/Beacon_of_wisdom_mpodbf.png",
+      compass: "https://res.cloudinary.com/dkb0gpqsk/image/upload/v1748611744/Trusted_Compass_q9oqln.png",
+      standard: "https://res.cloudinary.com/dkb0gpqsk/image/upload/v1748611743/True_standard_bearer_kxxucm.png",
+      mentor: "https://res.cloudinary.com/dkb0gpqsk/image/upload/v1748611742/Guiding_Mentor_v7on4q.png",
+      inspiration: "https://res.cloudinary.com/dkb0gpqsk/image/upload/v1748611751/Source_of_Inspiration_egd94o.png",
+    };
+
+    const today = new Date();
+    const formattedDate = today.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+    certDate.innerText = formattedDate;
+
+    function updatePreview() {
+      certName.innerText = awardeeNameInput.value || "Awardee Name";
+      certDesc.innerText = descriptionInput.value || "Description goes here...";
+      certFrom.innerText = fromNameInput.value ? `Given by: ${fromNameInput.value}` : "Given by: Your Name";
+      const selectedAward = awardTypeSelect.value;
+      const imageUrl = certificateImages[selectedAward];
+      if (imageUrl) certImage.src = imageUrl;
+    }
+
+    awardeeNameInput.addEventListener("input", updatePreview);
+    descriptionInput.addEventListener("input", updatePreview);
+    fromNameInput.addEventListener("input", updatePreview);
+    awardTypeSelect.addEventListener("change", updatePreview);
+
+    profilePicInput.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (event) {
+          profilePreview.src = event.target.result;
+          profilePreview.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    document.getElementById("downloadBtn").addEventListener("click", () => {
+      html2canvas(document.getElementById("previewPanel"), {
+        scale: 2,
+        useCORS: true
+      }).then(canvas => {
+        const imageData = canvas.toDataURL("image/png");
+        // Wix restriction: Open in new tab instead of download
+        const win = window.open();
+        win.document.write('<iframe src="' + imageData + '" frameborder="0" style="width:100%;height:100%;"></iframe>');
+      });
+    });
+  </script>
+</body>
+</html>
