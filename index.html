@@ -1,62 +1,120 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Certificate Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Appreciation Card Generator</title>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
         integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA=="
         crossorigin="anonymous"></script>
+
   <style>
-    body { font-family: 'Adobe Clean', sans-serif; margin: 0; padding: 20px; background: #fff; }
-    .container { display: flex; flex-direction: row; gap: 20px; }
-    .form-panel {
-      width: 300px;
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      font-family: 'Adobe Clean', sans-serif;
       display: flex;
-      flex-direction: column;
-      gap: 10px;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .container {
+      display: flex;
+      gap: 20px;
+      padding: 20px;
+      background-color: #111;
+      border-radius: 12px;
+      box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.05);
+    }
+
+    .form-panel {
+      width: 320px;
       padding: 20px;
       background: #f9f9f9;
       border-radius: 10px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
     }
-    .form-panel label { font-weight: bold; font-size: 14px; }
-    .form-panel input, .form-panel select, .form-panel textarea {
-      padding: 8px;
+
+    .form-panel label {
+      font-weight: bold;
       font-size: 14px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
     }
+
+    .form-panel input,
+    .form-panel select,
+    .form-panel textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      transition: border 0.2s ease-in-out;
+    }
+
+    .form-panel input:focus,
+    .form-panel select:focus,
+    .form-panel textarea:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+    }
+
+    .form-panel textarea {
+      resize: none;
+      height: 80px;
+    }
+
+    .form-panel input[type="file"] {
+      border: none;
+      padding: 5px;
+    }
+
     #downloadBtn {
       background: #007bff;
       color: white;
-      padding: 10px;
+      padding: 12px;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
+      font-size: 16px;
       cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 10px;
     }
-    #downloadBtn:hover { background: #0056b3; }
+
+    #downloadBtn:hover {
+      background: #0056b3;
+    }
+
     .preview-panel {
       width: 800px;
       height: 400px;
       position: relative;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      border: 1px solid #ccc;
+      text-align: center;
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
       overflow: hidden;
     }
+
     #certImage {
       width: 100%;
       height: 100%;
       object-fit: cover;
       position: absolute;
-      top: 0; left: 0;
+      top: 0;
+      left: 0;
       z-index: 1;
     }
-    .overlay {
-      position: absolute;
-      z-index: 2;
-      color: #000;
-    }
+
     .profile-pic {
       width: 100px;
       height: 100px;
@@ -68,53 +126,53 @@
       border: 2px solid white;
       z-index: 2;
     }
-    #certName {
-      top: 140px; left: 420px;
-      width: 320px;
-      text-align: center;
-      font-weight: bold;
+
+    .overlay {
+      position: absolute;
+      z-index: 3;
+      color: #000;
     }
+
+    #certName {
+      width: 320px;
+      top: 140px;
+      left: 420px;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+    }
+
     #certDesc {
-      top: 170px; left: 435px;
-      width: 300px;
+      top: 160px;
+      left: 435px;
+      width: 80%;
       font-size: 12px;
       text-align: left;
+      padding: 15px;
+      max-width: 300px;
     }
+
+    #certFrom, #certDate {
+      width: 320px;
+      font-size: 12px;
+      text-align: center;
+      padding: 0 15px;
+    }
+
     #certFrom {
-      bottom: 45px; left: 420px;
-      width: 320px;
-      font-size: 12px;
-      text-align: center;
+      bottom: 45px;
+      left: 420px;
     }
+
     #certDate {
-      bottom: 25px; left: 420px;
-      width: 320px;
-      font-size: 12px;
-      text-align: center;
+      bottom: 25px;
+      left: 420px;
     }
   </style>
 </head>
 <body>
-<div class="container">
-  <h1>Peer Recognition Certificate Generator</h1>
-  
-  <input type="text" id="peerName" placeholder="Peer's Name">
-  <input type="text" id="recognitionType" placeholder="Recognition Type">
-  <input type="text" id="yourName" placeholder="Your Name">
-  <br>
-  <button onclick="generateCertificate()">Generate Certificate</button>
-  <button onclick="downloadCertificate()">Download Certificate</button>
-  
-  <div id="certificate" style="display:none;">
-    <h2>Certificate of Recognition</h2>
-    <p>This certificate is awarded to</p>
-    <h3 id="nameDisplay"></h3>
-    <p>for</p>
-    <h4 id="typeDisplay"></h4>
-    <p>Presented by <span id="presenterDisplay"></span></p>
-  </div>
-</div>
   <div class="container">
+    <!-- Left Panel -->
     <div class="form-panel">
       <label for="awardeeName">Awardee Name:</label>
       <input type="text" id="awardeeName" placeholder="Enter recipient name" />
@@ -140,14 +198,27 @@
       <label for="fromName">Your name:</label>
       <input type="text" id="fromName" placeholder="Your name" />
 
-      <button id="downloadBtn">Preview & Save Certificate</button>
+      <button id="downloadBtn">Download Certificate</button>
     </div>
 
+    <!-- Right Panel -->
     <div id="previewPanel" class="preview-panel">
-      <img id="certImage" crossorigin="anonymous" src="https://res.cloudinary.com/dkb0gpqsk/image/upload/v1748611741/Pillar_of_strength_mrkwxd.png" alt="Certificate Background" />
-      <img id="profilePreview" class="profile-pic" src="" alt="Profile Picture" style="display: none;" />
+      <img
+        id="certImage"
+        crossorigin="anonymous"
+        src="https://res.cloudinary.com/dkb0gpqsk/image/upload/v1748611741/Pillar_of_strength_mrkwxd.png"
+        alt="Certificate Background"
+      />
+      <img
+        id="profilePreview"
+        crossorigin="anonymous"
+        class="profile-pic"
+        src=""
+        alt="Profile Picture"
+        style="display: none;"
+      />
       <div class="overlay" id="certName">Awardee Name</div>
-      <div class="overlay" id="certDesc">Description goes here...</div>
+      <div class="overlay" id="certDesc">A note of appreciation to share why this meant so much and the impact it had...</div>
       <div class="overlay" id="certFrom">Given by: Your Name</div>
       <div class="overlay" id="certDate"></div>
     </div>
@@ -159,6 +230,8 @@
     const awardTypeSelect = document.getElementById("awardType");
     const descriptionInput = document.getElementById("description");
     const fromNameInput = document.getElementById("fromName");
+    const downloadBtn = document.getElementById("downloadBtn");
+
     const certImage = document.getElementById("certImage");
     const profilePreview = document.getElementById("profilePreview");
     const certName = document.getElementById("certName");
@@ -189,9 +262,14 @@
       certName.innerText = awardeeNameInput.value || "Awardee Name";
       certDesc.innerText = descriptionInput.value || "Description goes here...";
       certFrom.innerText = fromNameInput.value ? `Given by: ${fromNameInput.value}` : "Given by: Your Name";
+
       const selectedAward = awardTypeSelect.value;
       const imageUrl = certificateImages[selectedAward];
-      if (imageUrl) certImage.src = imageUrl;
+
+      if (imageUrl) {
+        certImage.setAttribute("crossorigin", "anonymous");
+        certImage.src = imageUrl;
+      }
     }
 
     awardeeNameInput.addEventListener("input", updatePreview);
@@ -211,15 +289,15 @@
       }
     });
 
-    document.getElementById("downloadBtn").addEventListener("click", () => {
+    downloadBtn.addEventListener("click", () => {
       html2canvas(document.getElementById("previewPanel"), {
         scale: 2,
         useCORS: true
       }).then(canvas => {
-        const imageData = canvas.toDataURL("image/png");
-        // Wix restriction: Open in new tab instead of download
-        const win = window.open();
-        win.document.write('<iframe src="' + imageData + '" frameborder="0" style="width:100%;height:100%;"></iframe>');
+        const link = document.createElement('a');
+        link.download = 'certificate.png';
+        link.href = canvas.toDataURL();
+        link.click();
       });
     });
   </script>
