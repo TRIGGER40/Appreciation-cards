@@ -95,6 +95,25 @@
   </style>
 </head>
 <body>
+<div class="container">
+  <h1>Peer Recognition Certificate Generator</h1>
+  
+  <input type="text" id="peerName" placeholder="Peer's Name">
+  <input type="text" id="recognitionType" placeholder="Recognition Type">
+  <input type="text" id="yourName" placeholder="Your Name">
+  <br>
+  <button onclick="generateCertificate()">Generate Certificate</button>
+  <button onclick="downloadCertificate()">Download Certificate</button>
+  
+  <div id="certificate" style="display:none;">
+    <h2>Certificate of Recognition</h2>
+    <p>This certificate is awarded to</p>
+    <h3 id="nameDisplay"></h3>
+    <p>for</p>
+    <h4 id="typeDisplay"></h4>
+    <p>Presented by <span id="presenterDisplay"></span></p>
+  </div>
+</div>
   <div class="container">
     <div class="form-panel">
       <label for="awardeeName">Awardee Name:</label>
