@@ -12,6 +12,48 @@
  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
         integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA=="
         crossorigin="anonymous"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+</head>
+<body>
+  <style>
+    /* Hide mobile warning by default */
+    .mobile-warning {
+      display: none;
+      text-align: center;
+      padding: 2rem;
+      font-family: sans-serif;
+      background: #fff3cd;
+      color: #856404;
+      border: 1px solid #ffeeba;
+      margin: 2rem;
+      border-radius: 8px;
+    }
+
+    /* Show only on small screens */
+    @media only screen and (max-width: 768px) {
+      .mobile-warning {
+        display: block;
+      }
+
+      .main-content {
+        display: none; /* Hide main content on mobile */
+      }
+    }
+  </style>
+
+  <div class="mobile-warning">
+    <h2>We're working on it!</h2>
+    <p>This page is not yet optimized for mobile devices.<br>
+    For the best experience, please access it from a desktop.<br>
+    Thanks for your patience!</p>
+  </div>
+
+  <div class="main-content">
+    <!-- Your existing page content goes here -->
+    <h1>Welcome to Our Website</h1>
+    <p>This is your full desktop-optimized experience.</p>
+  </div>
   <title>Peer Recognition Cards</title>
   <style>
     body {
@@ -57,6 +99,7 @@
     margin: 0;
   }
     body {
+
 
     .container {
     display: flex;
