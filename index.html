@@ -400,6 +400,25 @@ text-size:14px;
         link.href = canvas.toDataURL();
         link.click();
       });
+      const generationData = {
+  awardeeName: awardeeNameInput.value || "N/A",
+  awardType: awardTypeSelect.value || "N/A",
+  certImage: canvas.toDataURL(), // Full base64 PNG
+  fromName: fromNameInput.value || "N/A",
+  date: new Date().toLocaleString()
+};
+      fetch("https://script.google.com/macros/s/AKfycbx4MO3_C7pD2JBaGUH3weyPIXVab9EjEA8NwjQnXe59FROOEwOK48fA_KgUxyHUoBUZ/exec", {
+  method: "POST",
+  body: JSON.stringify(generationData),
+  headers: {
+    "Content-Type": "application/json"
+  }
+})
+.then(res => res.json())
+.then(response => {
+  console.log("Excel saved:", response);
+})
+.catch(err => console.error("Error saving to Excel:", err));
     });
   </script>
 </body>
