@@ -308,7 +308,7 @@ downloadBtn.addEventListener("click", () => {
 
     console.log("Sending data:", generationData);
 
-    fetch("YOUR_WEB_APP_URL_HERE", {
+    fetch("https://script.google.com/macros/s/AKfycbxVJCyy_VSv4ocMRIg-lw9dNZ7zFYDLaTkryoz-QfSv9Fa91w-V8Ms3bRJ6M3GSZpLPtg/exec", {
       method: "POST",
       body: JSON.stringify(generationData),
       headers: { "Content-Type": "application/json" }
