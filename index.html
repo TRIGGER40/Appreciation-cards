@@ -305,11 +305,11 @@
           date: new Date().toLocaleString()
         };
 
-        fetch("https://script.google.com/macros/s/AKfycbwTSBiwhY4PmIx6yczD_LETUsl3lFqpBk2wgac2qf0Cxcjexn5888bZdehsg2H9ncqNZA/exec", {
-          method: "POST",
-          body: JSON.stringify(generationData),
-          headers: { "Content-Type": "application/json" }
-        })
+      fetch("https://script.google.com/macros/s/AKfycbz9JO16s7vrbcKfiuGowx_3PRkE83kj07CEmnxIj7jQ66K5JK3yNHSrz9Z-4UXWf0bZfA/exec", {
+  method: "POST",
+  body: JSON.stringify(generationData),
+  headers: { "Content-Type": "application/json" }
+})
         .then(res => res.json())
         .then(response => console.log("Excel saved:", response))
         .catch(err => console.error("Error saving to Excel:", err));
