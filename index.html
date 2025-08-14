@@ -211,7 +211,7 @@
       bottom: 20%;
       left: 75%;
       transform: translateX(-50%);
-      width: 35%;
+      width: 100%;
       font-size: 9px;
       text-align: center;
       padding: 0 10px;
@@ -648,11 +648,62 @@
       step1Indicator.classList.add("active");
     }
 
-    function downloadCard(previewElement, fileName) {
+    function downloadCard(previewElement, fileName, isMobile = false) {
+      const scale = isMobile ? 2 : 2; // Both mobile and desktop use 2x scale for high quality
+      
+      // For mobile downloads, temporarily set the preview panel to full desktop size
+      let originalWidth, originalHeight, originalMaxWidth, originalAspectRatio;
+      let originalNameFontSize, originalFromFontSize, originalDateFontSize;
+      
+      if (isMobile) {
+        const mobilePreviewPanel = document.getElementById("mobilePreviewPanel");
+        const mobileCertName = document.getElementById("mobileCertName");
+        const mobileCertFrom = document.getElementById("mobileCertFrom");
+        const mobileCertDate = document.getElementById("mobileCertDate");
+        
+        // Store original styles
+        originalWidth = mobilePreviewPanel.style.width;
+        originalHeight = mobilePreviewPanel.style.height;
+        originalMaxWidth = mobilePreviewPanel.style.maxWidth;
+        originalAspectRatio = mobilePreviewPanel.style.aspectRatio;
+        originalNameFontSize = mobileCertName.style.fontSize;
+        originalFromFontSize = mobileCertFrom.style.fontSize;
+        originalDateFontSize = mobileCertDate.style.fontSize;
+        
+        // Set to desktop size for high-quality capture
+        mobilePreviewPanel.style.width = '800px';
+        mobilePreviewPanel.style.height = '400px';
+        mobilePreviewPanel.style.maxWidth = '800px';
+        mobilePreviewPanel.style.aspectRatio = 'none';
+        
+        // Scale up fonts to match desktop proportions
+        mobileCertName.style.fontSize = '26px';
+        mobileCertFrom.style.fontSize = '12px';
+        mobileCertDate.style.fontSize = '12px';
+      }
+      
       html2canvas(previewElement, {
-        scale: 2,
-        useCORS: true
+        scale: scale,
+        useCORS: true,
+        width: isMobile ? 800 : undefined,
+        height: isMobile ? 400 : undefined
       }).then(canvas => {
+        // Restore original mobile styling
+        if (isMobile) {
+          const mobilePreviewPanel = document.getElementById("mobilePreviewPanel");
+          const mobileCertName = document.getElementById("mobileCertName");
+          const mobileCertFrom = document.getElementById("mobileCertFrom");
+          const mobileCertDate = document.getElementById("mobileCertDate");
+          
+          mobilePreviewPanel.style.width = originalWidth;
+          mobilePreviewPanel.style.height = originalHeight;
+          mobilePreviewPanel.style.maxWidth = originalMaxWidth;
+          mobilePreviewPanel.style.aspectRatio = originalAspectRatio;
+          mobileCertName.style.fontSize = originalNameFontSize;
+          mobileCertFrom.style.fontSize = originalFromFontSize;
+          mobileCertDate.style.fontSize = originalDateFontSize;
+        }
+        
         const link = document.createElement('a');
         link.download = fileName;
         link.href = canvas.toDataURL();
@@ -683,7 +734,7 @@
     awardTypeSelect.addEventListener("change", updateDesktopPreview);
 
     downloadBtn.addEventListener("click", () => {
-      downloadCard(document.getElementById("previewPanel"), 'Thankyou.png');
+      downloadCard(document.getElementById("previewPanel"), 'Thankyou.png', false);
     });
 
     // Mobile event listeners
@@ -694,7 +745,7 @@
     mobilePreviewBtn.addEventListener("click", goToStep2);
     mobileBackBtn.addEventListener("click", goToStep1);
     mobileDownloadBtn.addEventListener("click", () => {
-      downloadCard(document.getElementById("mobilePreviewPanel"), 'Thankyou.png');
+      downloadCard(document.getElementById("mobilePreviewPanel"), 'Thankyou.png', true);
     });
 
     // Initialize previews on load
