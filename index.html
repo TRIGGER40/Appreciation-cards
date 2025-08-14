@@ -770,16 +770,79 @@
              
              // Android-specific download handling
              if (isAndroid) {
-               console.log('Android detected, opening certificate image in new tab');
-               // Android: Use blob URL for better compatibility
-               canvas.toBlob(function(blob) {
-                 const blobUrl = URL.createObjectURL(blob);
-                 const newWindow = window.open(blobUrl, '_blank');
-                 // Clean up blob URL after a delay
-                 setTimeout(() => {
-                   URL.revokeObjectURL(blobUrl);
-                 }, 1000);
-               }, 'image/png', 1.0);
+               console.log('Android detected, showing certificate in modal');
+               // Android: Show certificate in modal overlay
+               const dataUrl = canvas.toDataURL('image/png', 1.0);
+               
+               // Create modal overlay
+               const modal = document.createElement('div');
+               modal.style.cssText = `
+                 position: fixed;
+                 top: 0;
+                 left: 0;
+                 width: 100%;
+                 height: 100%;
+                 background: rgba(0,0,0,0.8);
+                 z-index: 10000;
+                 display: flex;
+                 align-items: center;
+                 justify-content: center;
+                 padding: 20px;
+                 box-sizing: border-box;
+               `;
+               
+               // Create modal content
+               const modalContent = document.createElement('div');
+               modalContent.style.cssText = `
+                 background: white;
+                 border-radius: 10px;
+                 padding: 20px;
+                 max-width: 90%;
+                 max-height: 90%;
+                 overflow: auto;
+                 text-align: center;
+               `;
+               
+               // Create image
+               const img = document.createElement('img');
+               img.src = dataUrl;
+               img.style.cssText = `
+                 max-width: 100%;
+                 height: auto;
+                 border: 1px solid #ccc;
+                 border-radius: 5px;
+               `;
+               img.alt = 'Appreciation Card';
+               
+               // Create close button
+               const closeBtn = document.createElement('button');
+               closeBtn.textContent = 'Close';
+               closeBtn.style.cssText = `
+                 margin-top: 15px;
+                 padding: 10px 20px;
+                 background: #007bff;
+                 color: white;
+                 border: none;
+                 border-radius: 5px;
+                 cursor: pointer;
+                 font-size: 16px;
+               `;
+               closeBtn.onclick = () => {
+                 document.body.removeChild(modal);
+               };
+               
+               // Add elements to modal
+               modalContent.appendChild(img);
+               modalContent.appendChild(closeBtn);
+               modal.appendChild(modalContent);
+               document.body.appendChild(modal);
+               
+               // Close modal when clicking outside
+               modal.onclick = (e) => {
+                 if (e.target === modal) {
+                   document.body.removeChild(modal);
+                 }
+               };
              } else {
                link.click();
              }
@@ -997,7 +1060,7 @@
     // Change button text for Android
     const isAndroid = /Android/i.test(navigator.userAgent);
     if (isAndroid) {
-      mobileDownloadBtn.textContent = "Open card in a new tab";
+      mobileDownloadBtn.textContent = "View certificate";
     }
 
     // Initialize previews on load
