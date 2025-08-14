@@ -6,7 +6,7 @@
 
   <!-- Open Graph -->
   <meta property="og:title" content="Appreciation Cards" />
-  <meta property="og:description" content="Easily download a customised appreciation card for a peer that has been amazing lately!" />
+  <meta property="og:description" content="Easily download a customised appreciation card for a peer who has been amazing lately!" />
   <meta property="og:image" content="https://res.cloudinary.com/dkb0gpqsk/image/upload/Appreciate_small_idmwun.png" />
   <meta property="og:url" content="https://trigger40.github.io/Certificate-Peer-Recognition/" />
   <meta property="og:type" content="website" />
@@ -52,8 +52,8 @@
     .mobile-step-nav {
       display: none;
       width: 100%;
-      max-width: 400px;
-      margin: 20px auto;
+     
+      margin: 20px 20px 20px 20px;
       padding: 0 20px;
     }
 
@@ -103,8 +103,9 @@
     .mobile-step {
       display: none;
       width: 100%;
-      max-width: 400px;
+      max-width: calc(100vw - 40px);
       padding: 0 20px;
+      margin: 0 auto;
     }
 
     .mobile-step.active {
@@ -113,12 +114,13 @@
 
     /* Mobile form panel */
     .mobile-form-panel {
-      width: 100%;
+      
       padding: 20px;
       background: #f9f9f9;
       border-radius: 10px;
       box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
       text-align: left;
+      margin: 20px;
     }
 
     .mobile-form-panel label {
@@ -434,6 +436,38 @@
         margin: 0 auto 20px;
         padding: 0 20px;
       }
+      
+      /* Ensure mobile preview fits properly */
+      .mobile-preview-panel {
+        width: calc(100vw - 40px);
+        max-width: calc(100vw - 40px);
+        aspect-ratio: 2 / 1;
+      }
+      
+      /* Adjust text positioning for better mobile fit */
+      .mobile-preview-panel #mobileCertName {
+        width: 100%;
+        top: 23%;
+        left: 75%;
+        transform: translateX(-50%);
+        font-size: 14px;
+      }
+      
+      .mobile-preview-panel #mobileCertFrom {
+        bottom: 20%;
+        left: 75%;
+        transform: translateX(-50%);
+        width: 100%;
+        font-size: 10px;
+      }
+      
+      .mobile-preview-panel #mobileCertDate {
+        bottom: 10%;
+        left: 75%;
+        transform: translateX(-50%);
+        width: 100%;
+        font-size: 10px;
+      }
     }
 
     /* Mobile header - hidden by default */
@@ -445,7 +479,7 @@
     }
 
     /* Ensure mobile elements are hidden on desktop */
-    @media only screen and (min-width: 769px) {
+    @media only screen and (min-width: 1080px) {
       .mobile-step-nav,
       .mobile-step,
       .mobile-header {
@@ -559,7 +593,7 @@
     </div>
     
     <div class="mobile-actions">
-      <button class="back-btn" id="mobileBackBtn">Go back</button>
+      <button class="back-btn" id="mobileBackBtn">Go Bback</button>
       <button class="download-btn" id="mobileDownloadBtn">Download card</button>
     </div>
   </div>
@@ -710,9 +744,9 @@
         link.click();
 
         const generationData = new URLSearchParams();
-        const awardeeName = mobileAwardeeNameInput.value || awardeeNameInput.value || "N/A";
-        const awardType = mobileAwardTypeSelect.value || awardTypeSelect.value || "N/A";
-        const fromName = mobileFromNameInput.value || fromNameInput.value || "N/A";
+        const awardeeName = isMobile ? mobileAwardeeNameInput.value : awardeeNameInput.value || "N/A";
+        const awardType = isMobile ? mobileAwardTypeSelect.value : awardTypeSelect.value || "N/A";
+        const fromName = isMobile ? mobileFromNameInput.value : fromNameInput.value || "N/A";
         
         generationData.append("awardeeName", awardeeName);
         generationData.append("awardType", awardType);
