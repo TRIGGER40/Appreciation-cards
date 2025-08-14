@@ -735,50 +735,74 @@
         mobileCertDate.style.fontSize = '12px';
       }
       
-      html2canvas(previewElement, {
-        scale: scale,
-        useCORS: true,
-        width: isMobile ? 800 : undefined,
-        height: isMobile ? 400 : undefined
-      }).then(canvas => {
-        // Restore original mobile styling
-        if (isMobile) {
-          const mobilePreviewPanel = document.getElementById("mobilePreviewPanel");
-          const mobileCertName = document.getElementById("mobileCertName");
-          const mobileCertFrom = document.getElementById("mobileCertFrom");
-          const mobileCertDate = document.getElementById("mobileCertDate");
-          
-          mobilePreviewPanel.style.width = originalWidth;
-          mobilePreviewPanel.style.height = originalHeight;
-          mobilePreviewPanel.style.maxWidth = originalMaxWidth;
-          mobilePreviewPanel.style.aspectRatio = originalAspectRatio;
-          mobileCertName.style.fontSize = originalNameFontSize;
-          mobileCertFrom.style.fontSize = originalFromFontSize;
-          mobileCertDate.style.fontSize = originalDateFontSize;
+      // Wait for images to load before capturing
+      const images = previewElement.querySelectorAll('img');
+      const imagePromises = Array.from(images).map(img => {
+        if (img.complete) {
+          return Promise.resolve();
+        } else {
+          return new Promise((resolve, reject) => {
+            img.onload = resolve;
+            img.onerror = reject;
+          });
         }
-        
-        const link = document.createElement('a');
-        link.download = fileName;
-        link.href = canvas.toDataURL();
-        link.click();
-
-        const generationData = new URLSearchParams();
-        const awardeeName = isMobile ? mobileAwardeeNameInput.value : awardeeNameInput.value || "N/A";
-        const awardType = isMobile ? mobileAwardTypeSelect.value : awardTypeSelect.value || "N/A";
-        const fromName = isMobile ? mobileFromNameInput.value : fromNameInput.value || "N/A";
-        
-        generationData.append("awardeeName", awardeeName);
-        generationData.append("awardType", awardType);
-        generationData.append("fromName", fromName);
-        generationData.append("date", new Date().toLocaleString());
-
-        fetch("https://script.google.com/macros/s/AKfycbwv-s7nlQLyNUJVz61o7mZAaNyRX3KeaSctom7vgSlpokxPtwZ70vQNAetF6Q8JizUv9A/exec", {
-          method: "POST",
-          body: generationData
-        })
-        .then(() => console.log("Excel saved"))
-        .catch(err => console.error("Error saving to Excel:", err));
       });
+      
+      Promise.all(imagePromises)
+        .then(() => {
+          return html2canvas(previewElement, {
+            scale: scale,
+            useCORS: true,
+            allowTaint: true,
+            foreignObjectRendering: true,
+            width: isMobile ? 800 : undefined,
+            height: isMobile ? 400 : undefined,
+            backgroundColor: '#ffffff'
+          });
+        })
+        .then(canvas => {
+          // Restore original mobile styling
+          if (isMobile) {
+            const mobilePreviewPanel = document.getElementById("mobilePreviewPanel");
+            const mobileCertName = document.getElementById("mobileCertName");
+            const mobileCertFrom = document.getElementById("mobileCertFrom");
+            const mobileCertDate = document.getElementById("mobileCertDate");
+            
+            mobilePreviewPanel.style.width = originalWidth;
+            mobilePreviewPanel.style.height = originalHeight;
+            mobilePreviewPanel.style.maxWidth = originalMaxWidth;
+            mobilePreviewPanel.style.aspectRatio = originalAspectRatio;
+            mobileCertName.style.fontSize = originalNameFontSize;
+            mobileCertFrom.style.fontSize = originalFromFontSize;
+            mobileCertDate.style.fontSize = originalDateFontSize;
+          }
+          
+          const link = document.createElement('a');
+          link.download = fileName;
+          link.href = canvas.toDataURL('image/png', 1.0);
+          link.click();
+
+          const generationData = new URLSearchParams();
+          const awardeeName = isMobile ? mobileAwardeeNameInput.value : awardeeNameInput.value || "N/A";
+          const awardType = isMobile ? mobileAwardTypeSelect.value : awardTypeSelect.value || "N/A";
+          const fromName = isMobile ? mobileFromNameInput.value : fromNameInput.value || "N/A";
+          
+          generationData.append("awardeeName", awardeeName);
+          generationData.append("awardType", awardType);
+          generationData.append("fromName", fromName);
+          generationData.append("date", new Date().toLocaleString());
+
+          fetch("https://script.google.com/macros/s/AKfycbwv-s7nlQLyNUJVz61o7mZAaNyRX3KeaSctom7vgSlpokxPtwZ70vQNAetF6Q8JizUv9A/exec", {
+            method: "POST",
+            body: generationData
+          })
+          .then(() => console.log("Excel saved"))
+          .catch(err => console.error("Error saving to Excel:", err));
+        })
+        .catch(error => {
+          console.error("Error generating certificate:", error);
+          alert("There was an error generating your certificate. Please try again.");
+        });
     }
 
     // Desktop event listeners
