@@ -48,24 +48,222 @@
       line-height: 1.5;
     }
 
-    /* Mobile warning */
+    /* Mobile step navigation */
+    .mobile-step-nav {
+      display: none;
+      width: 100%;
+      max-width: 400px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+
+    .step-indicator {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .step {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      font-weight: bold;
+      color: #666;
+    }
+
+    .step.active {
+      color: #007bff;
+    }
+
+    .step-number {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #ccc;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+    }
+
+    .step.active .step-number {
+      background: #007bff;
+    }
+
+    .step-divider {
+      width: 40px;
+      height: 2px;
+      background: #ccc;
+      margin: 0 10px;
+    }
+
+    /* Mobile content steps */
+    .mobile-step {
+      display: none;
+      width: 100%;
+      max-width: 400px;
+      padding: 0 20px;
+    }
+
+    .mobile-step.active {
+      display: block;
+    }
+
+    /* Mobile form panel */
+    .mobile-form-panel {
+      width: 100%;
+      padding: 20px;
+      background: #f9f9f9;
+      border-radius: 10px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: left;
+    }
+
+    .mobile-form-panel label {
+      font-weight: bold;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .mobile-form-panel input,
+    .mobile-form-panel select {
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      border: 1px solid #ccc;
+      transition: border 0.2s ease-in-out;
+      margin-bottom: 40px;
+    }
+
+    .mobile-form-panel input:focus,
+    .mobile-form-panel select:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+    }
+
+    .mobile-form-panel button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 16px;
+      background: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .mobile-form-panel button:hover {
+      background: #0056b3;
+    }
+
+    /* Mobile preview panel */
+    .mobile-preview-panel {
+      width: 100%;
+      max-width: 800px;
+      aspect-ratio: 2 / 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .mobile-preview-panel #mobileCertImage {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    .mobile-preview-panel .overlay {
+      position: absolute;
+      z-index: 3;
+      color: #000;
+    }
+
+    .mobile-preview-panel #mobileCertName {
+      width: 35%;
+      top: 23%;
+      left: 75%;
+      transform: translateX(-50%);
+      font-size: 14px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .mobile-preview-panel #mobileCertFrom {
+      bottom: 20%;
+      left: 75%;
+      transform: translateX(-50%);
+      width: 35%;
+      font-size: 9px;
+      text-align: center;
+      padding: 0 10px;
+    }
+
+    .mobile-preview-panel #mobileCertDate {
+      bottom: 10%;
+      left: 75%;
+      transform: translateX(-50%);
+      width: 35%;
+      font-size: 9px;
+      text-align: center;
+    }
+
+    /* Mobile action buttons */
+    .mobile-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .mobile-actions button {
+      flex: 1;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .mobile-actions .back-btn {
+      background: #6c757d;
+      color: white;
+    }
+
+    .mobile-actions .back-btn:hover {
+      background: #545b62;
+    }
+
+    .mobile-actions .download-btn {
+      background: #007bff;
+      color: white;
+    }
+
+    .mobile-actions .download-btn:hover {
+      background: #0056b3;
+    }
+
+    /* Mobile warning - hide on mobile */
     .mobile-warning {
       display: none;
-      text-align: center;
-      padding: 2rem;
-      background: rgba(0, 0, 0, 0);
-      color: #000000;
-      border: 1px solid #000000;
-      margin: 2rem;
-      border-radius: 8px;
-    }
-    @media only screen and (max-width: 768px) {
-      .mobile-warning {
-        display: block;
-      }
-      .main-content {
-        display: none;
-      }
     }
 
     /* Layout */
@@ -196,6 +394,68 @@
       color: #000000;
       font-size: 14px;
     }
+
+    /* Mobile responsive styles */
+    @media only screen and (max-width: 768px) {
+      .mobile-step-nav {
+        display: block;
+      }
+      
+      .mobile-step {
+        display: none;
+      }
+      
+      .mobile-step.active {
+        display: block;
+      }
+      
+      .main-content {
+        display: none;
+      }
+      
+      .mobile-header {
+        display: block !important;
+        width: 100%;
+        text-align: center;
+        padding: 20px;
+      }
+      
+      .mobile-warning {
+        display: none !important;
+      }
+      
+      h1 {
+        font-size: 28px;
+        margin-top: 30px;
+      }
+      
+      .description {
+        font-size: 16px;
+        margin: 0 auto 20px;
+        padding: 0 20px;
+      }
+    }
+
+    /* Mobile header - hidden by default */
+    .mobile-header {
+      display: none;
+      width: 100%;
+      text-align: center;
+      padding: 20px;
+    }
+
+    /* Ensure mobile elements are hidden on desktop */
+    @media only screen and (min-width: 769px) {
+      .mobile-step-nav,
+      .mobile-step,
+      .mobile-header {
+        display: none !important;
+      }
+      
+      .main-content {
+        display: block !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -205,6 +465,14 @@
     <p>This page is not yet optimized for mobile devices.<br>
     For the best experience, please access it from a desktop.<br>
     Thanks for your patience!</p>
+  </div>
+
+  <!-- Mobile Header -->
+  <div class="mobile-header">
+    <h1>Appreciation cards</h1>
+    <p class="description">
+      Thank you for taking time out to appreciate your peers. Fill in the required details, download the card and share it in Mail or Slack.
+    </p>
   </div>
 
   <div class="main-content">
@@ -244,11 +512,64 @@
     </div>
   </div>
 
+  <!-- Mobile Step Navigation -->
+  <div class="mobile-step-nav">
+    <div class="step-indicator">
+      <div class="step active" id="step1-indicator">
+        <div class="step-number">1</div>
+        <span>Details</span>
+      </div>
+      <div class="step-divider"></div>
+      <div class="step" id="step2-indicator">
+        <div class="step-number">2</div>
+        <span>Preview</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Step 1: Form -->
+  <div class="mobile-step active" id="mobile-step1">
+    <div class="mobile-form-panel">
+      <label for="mobileAwardeeName">Awardee name:</label>
+      <input type="text" id="mobileAwardeeName" placeholder="Enter recipient name" />
+
+      <label for="mobileAwardType">Select appreciation card:</label>
+      <select id="mobileAwardType">
+        <option value="Lifeguard">The Lifeguard</option>
+        <option value="Monk">The Monk</option>
+        <option value="Spark">The Spark</option>
+        <option value="Knight">The Knight</option>
+        <option value="Funone">The Fun One</option>
+      </select>
+
+      <label for="mobileFromName">Your name:</label>
+      <input type="text" id="mobileFromName" placeholder="Your name" />
+
+      <button id="mobilePreviewBtn">Preview Card</button>
+    </div>
+  </div>
+
+  <!-- Mobile Step 2: Preview -->
+  <div class="mobile-step" id="mobile-step2">
+    <div class="mobile-preview-panel" id="mobilePreviewPanel">
+      <img id="mobileCertImage" crossorigin="anonymous" src="" alt="Certificate Background" />
+      <div class="overlay" id="mobileCertName">Awardee Name</div>
+      <div class="overlay" id="mobileCertFrom">Given by: Your Name</div>
+      <div class="overlay" id="mobileCertDate"></div>
+    </div>
+    
+    <div class="mobile-actions">
+      <button class="back-btn" id="mobileBackBtn">Go Back</button>
+      <button class="download-btn" id="mobileDownloadBtn">Download</button>
+    </div>
+  </div>
+
   <footer>
     <p>Built by Adobe Design with ❤️</p>
   </footer>
 
   <script>
+    // Desktop elements
     const awardeeNameInput = document.getElementById("awardeeName");
     const awardTypeSelect = document.getElementById("awardType");
     const fromNameInput = document.getElementById("fromName");
@@ -258,6 +579,24 @@
     const certName = document.getElementById("certName");
     const certFrom = document.getElementById("certFrom");
     const certDate = document.getElementById("certDate");
+
+    // Mobile elements
+    const mobileAwardeeNameInput = document.getElementById("mobileAwardeeName");
+    const mobileAwardTypeSelect = document.getElementById("mobileAwardType");
+    const mobileFromNameInput = document.getElementById("mobileFromName");
+    const mobilePreviewBtn = document.getElementById("mobilePreviewBtn");
+    const mobileBackBtn = document.getElementById("mobileBackBtn");
+    const mobileDownloadBtn = document.getElementById("mobileDownloadBtn");
+
+    const mobileCertImage = document.getElementById("mobileCertImage");
+    const mobileCertName = document.getElementById("mobileCertName");
+    const mobileCertFrom = document.getElementById("mobileCertFrom");
+    const mobileCertDate = document.getElementById("mobileCertDate");
+
+    const step1Indicator = document.getElementById("step1-indicator");
+    const step2Indicator = document.getElementById("step2-indicator");
+    const mobileStep1 = document.getElementById("mobile-step1");
+    const mobileStep2 = document.getElementById("mobile-step2");
 
     const certificateImages = {
       Lifeguard: "https://res.cloudinary.com/dkb0gpqsk/image/upload/Lifeguard_thrs9n.png",
@@ -269,13 +608,16 @@
 
     // Set today's date
     const today = new Date();
-    certDate.innerText = today.toLocaleDateString("en-GB", {
+    const dateString = today.toLocaleDateString("en-GB", {
       day: "2-digit",
       month: "short",
       year: "numeric",
     });
+    
+    certDate.innerText = dateString;
+    mobileCertDate.innerText = dateString;
 
-    function updatePreview() {
+    function updateDesktopPreview() {
       certName.innerText = awardeeNameInput.value || "Awardee Name";
       certFrom.innerText = fromNameInput.value ? `Given by: ${fromNameInput.value}` : "Given by: Your Name";
 
@@ -283,38 +625,81 @@
       certImage.src = certificateImages[selectedAward] || "";
     }
 
-    awardeeNameInput.addEventListener("input", updatePreview);
-    fromNameInput.addEventListener("input", updatePreview);
-    awardTypeSelect.addEventListener("change", updatePreview);
+    function updateMobilePreview() {
+      mobileCertName.innerText = mobileAwardeeNameInput.value || "Awardee Name";
+      mobileCertFrom.innerText = mobileFromNameInput.value ? `Given by: ${mobileFromNameInput.value}` : "Given by: Your Name";
 
-downloadBtn.addEventListener("click", () => {
-  html2canvas(document.getElementById("previewPanel"), {
-    scale: 2,
-    useCORS: true
-  }).then(canvas => {
-    const link = document.createElement('a');
-    link.download = 'Thankyou.png';
-    link.href = canvas.toDataURL();
-    link.click();
+      const selectedAward = mobileAwardTypeSelect.value;
+      mobileCertImage.src = certificateImages[selectedAward] || "";
+    }
 
-    const generationData = new URLSearchParams();
-    generationData.append("awardeeName", awardeeNameInput.value || "N/A");
-    generationData.append("awardType", awardTypeSelect.value || "N/A");
-    generationData.append("fromName", fromNameInput.value || "N/A");
-    generationData.append("date", new Date().toLocaleString());
+    function goToStep2() {
+      mobileStep1.classList.remove("active");
+      mobileStep2.classList.add("active");
+      step1Indicator.classList.remove("active");
+      step2Indicator.classList.add("active");
+      updateMobilePreview();
+    }
 
-    fetch("https://script.google.com/macros/s/AKfycbwv-s7nlQLyNUJVz61o7mZAaNyRX3KeaSctom7vgSlpokxPtwZ70vQNAetF6Q8JizUv9A/exec", {
-      method: "POST",
-      body: generationData
-    })
-    .then(() => console.log("Excel saved"))
-    .catch(err => console.error("Error saving to Excel:", err));
-  });
-});
+    function goToStep1() {
+      mobileStep2.classList.remove("active");
+      mobileStep1.classList.add("active");
+      step2Indicator.classList.remove("active");
+      step1Indicator.classList.add("active");
+    }
 
+    function downloadCard(previewElement, fileName) {
+      html2canvas(previewElement, {
+        scale: 2,
+        useCORS: true
+      }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = fileName;
+        link.href = canvas.toDataURL();
+        link.click();
 
-    // Initialize preview on load
-    updatePreview();
+        const generationData = new URLSearchParams();
+        const awardeeName = mobileAwardeeNameInput.value || awardeeNameInput.value || "N/A";
+        const awardType = mobileAwardTypeSelect.value || awardTypeSelect.value || "N/A";
+        const fromName = mobileFromNameInput.value || fromNameInput.value || "N/A";
+        
+        generationData.append("awardeeName", awardeeName);
+        generationData.append("awardType", awardType);
+        generationData.append("fromName", fromName);
+        generationData.append("date", new Date().toLocaleString());
+
+        fetch("https://script.google.com/macros/s/AKfycbwv-s7nlQLyNUJVz61o7mZAaNyRX3KeaSctom7vgSlpokxPtwZ70vQNAetF6Q8JizUv9A/exec", {
+          method: "POST",
+          body: generationData
+        })
+        .then(() => console.log("Excel saved"))
+        .catch(err => console.error("Error saving to Excel:", err));
+      });
+    }
+
+    // Desktop event listeners
+    awardeeNameInput.addEventListener("input", updateDesktopPreview);
+    fromNameInput.addEventListener("input", updateDesktopPreview);
+    awardTypeSelect.addEventListener("change", updateDesktopPreview);
+
+    downloadBtn.addEventListener("click", () => {
+      downloadCard(document.getElementById("previewPanel"), 'Thankyou.png');
+    });
+
+    // Mobile event listeners
+    mobileAwardeeNameInput.addEventListener("input", updateMobilePreview);
+    mobileFromNameInput.addEventListener("input", updateMobilePreview);
+    mobileAwardTypeSelect.addEventListener("change", updateMobilePreview);
+
+    mobilePreviewBtn.addEventListener("click", goToStep2);
+    mobileBackBtn.addEventListener("click", goToStep1);
+    mobileDownloadBtn.addEventListener("click", () => {
+      downloadCard(document.getElementById("mobilePreviewPanel"), 'Thankyou.png');
+    });
+
+    // Initialize previews on load
+    updateDesktopPreview();
+    updateMobilePreview();
   </script>
 </body>
 </html>
