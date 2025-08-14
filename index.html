@@ -737,9 +737,13 @@
       
       html2canvas(previewElement, {
         scale: scale,
-        useCORS: true,
+        useCORS: false,
+        allowTaint: false,
+        foreignObjectRendering: false,
         width: isMobile ? 800 : undefined,
-        height: isMobile ? 400 : undefined
+        height: isMobile ? 400 : undefined,
+        backgroundColor: '#ffffff',
+        logging: false
       }).then(canvas => {
         // Restore original mobile styling
         if (isMobile) {
