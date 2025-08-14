@@ -297,13 +297,13 @@
         link.href = canvas.toDataURL();
         link.click();
 
-        const generationData = {
-          awardeeName: awardeeNameInput.value || "N/A",
-          awardType: awardTypeSelect.value || "N/A",
-          certImage: canvas.toDataURL(),
-          fromName: fromNameInput.value || "N/A",
-          date: new Date().toLocaleString()
-        };
+       const generationData = {
+  awardeeName: awardeeNameInput.value || "N/A",
+  awardType: awardTypeSelect.value || "N/A",
+  fromName: fromNameInput.value || "N/A",
+  date: new Date().toLocaleString()
+};
+console.log(generationData); 
 
       fetch("https://script.google.com/macros/s/AKfycbz9JO16s7vrbcKfiuGowx_3PRkE83kj07CEmnxIj7jQ66K5JK3yNHSrz9Z-4UXWf0bZfA/exec", {
   method: "POST",
