@@ -1,120 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Open Graph -->
-<meta property="og:title" content="Peer Appreciation Cards" />
-<meta property="og:description" content="Easily download a customised appreciation card for a peer that has been amazing lately!." />
-<meta property="og:image" content="https://res.cloudinary.com/dkb0gpqsk/image/upload/v1748627248/Screenshot_2025-05-30_at_22.44.50_gexqpn.png" />
-<meta property="og:url" content="https://trigger40.github.io/Certificate-Peer-Recognition/" />
-<meta property="og:type" content="website" />
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
-        integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA=="
-        crossorigin="anonymous"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-</head>
-<body>
+  <!-- Open Graph -->
+  <meta property="og:title" content="Appreciation Cards" />
+  <meta property="og:description" content="Easily download a customised appreciation card for a peer that has been amazing lately!" />
+  <meta property="og:image" content="https://res.cloudinary.com/dkb0gpqsk/image/upload/5669728_jzzjix.jpg" />
+  <meta property="og:url" content="https://trigger40.github.io/Certificate-Peer-Recognition/" />
+  <meta property="og:type" content="website" />
+
+  <title>Appreciation cards</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+          integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA=="
+          crossorigin="anonymous"></script>
+
   <style>
-    /* Hide mobile warning by default */
-    .mobile-warning {
-      display: none;
-      text-align: center;
-      padding: 2rem;
-      font-family: sans-serif;
-      background: rgba(0, 0, 0, 0)
-      color: #ffffff;
-      border: 1px solid #ffffff;
-      margin: 2rem;
-      border-radius: 8px;
-    }
-
-    /* Show only on small screens */
-    @media only screen and (max-width: 768px) {
-      .mobile-warning {
-        display: block;
-      }
-
-      .main-content {
-        display: none; /* Hide main content on mobile */
-      }
-    }
-  </style>
-
-  <div class="mobile-warning">
-<style>
-h2{
-color:#ffffff;
-}
-</style>
-    <h2>We're working on it!</h2>
-    <p>This page is not yet optimized for mobile devices.<br>
-    For the best experience, please access it from a desktop.<br>
-    Thanks for your patience!</p>
-  </div>
-
-  <div class="main-content">
-    <!-- Your existing page content goes here -->
-  <title>Peer Recognition Cards</title>
-    <style>
+    /* General styling */
     body {
       font-family: sans-serif;
       background-color: #f4f4f4;
-      padding-top: 50px;
-      padding-left:auto;
-      padding-right:auto;
-      padding-bottom: 20px;
+      margin: 0;
+      padding: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
+      background-image: url(https://res.cloudinary.com/dkb0gpqsk/image/upload/5669728_jzzjix.jpg);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      min-height: 100vh;
     }
+
     h1 {
       font-size: 36px;
-      color: #f4f4f4;
+      color: #000000;
+      margin-top: 50px;
     }
+
     .description {
-      margin-left: auto;
-      margin-right: auto;
-      margin-bottom:30px;  
+      margin: 0 auto 30px;
       font-size: 18px;
-      color: #b1b1b1;
+      color: #000000;
       max-width: 700px;
       line-height: 1.5;
     }
-  </style>
-</head>
-<body>
 
-  <h1>Peer Recognition Cards</h1>
-  <p class="description">
-    Thank you for taking time out to appreciate your peers. Fill in the required details, download the card and share it in Mail or Slack. It's good to CC their Manager as well.
-    <a href="https://www.figma.com/proto/aZSEJtzb5KSUFLiWYWF2JS/Power-Spirit-Guide?page-id=0%3A1&node-id=93-2&viewport=31%2C305%2C0.17&t=XbITTkozzNQINjgy-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=93%3A2" target="_blank" rel="noopener noreferrer" style="color: #EAA0FF;">
-      Know more about the categories and characters
-    </a>  
-  </p>
-</body>
+    /* Mobile warning */
+    .mobile-warning {
+      display: none;
+      text-align: center;
+      padding: 2rem;
+      background: rgba(0, 0, 0, 0);
+      color: #000000;
+      border: 1px solid #000000;
+      margin: 2rem;
+      border-radius: 8px;
+    }
+    @media only screen and (max-width: 768px) {
+      .mobile-warning {
+        display: block;
+      }
+      .main-content {
+        display: none;
+      }
+    }
 
- <style>
-  body {
-    background-image: url(https://res.cloudinary.com/dkb0gpqsk/image/upload/v1748622476/Frame_174572_kjvwpn.png);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    height: 100vh;
-    margin: 0;
-  }
-    body {
-
-
+    /* Layout */
     .container {
-    display: flex;
-    gap: 20px;
-    padding: 20px;
-    font-family: 'Adobe Clean', sans-serif;
-}
-    
+      display: flex;
+      gap: 20px;
+      padding: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    /* Form panel */
     .form-panel {
       width: 320px;
       padding: 20px;
@@ -124,65 +88,57 @@ color:#ffffff;
       display: flex;
       text-align: left;
       flex-direction: column;
-      gap: 15px;
-    } 
+    }
 
     .form-panel label {
       font-weight: bold;
       font-size: 14px;
+      margin-bottom: 8px; /* gap between label and its input */
     }
 
     .form-panel input,
-    .form-panel select,
-    .form-panel textarea {
-      width:(100%-12px);
+    .form-panel select {
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
       padding: 10px;
-      border: 1px solid #ccc;
       border-radius: 8px;
       font-size: 14px;
       outline: none;
+      border: 1px solid #ccc;
       transition: border 0.2s ease-in-out;
+      margin-bottom: 40px; /* gap between input sections */
     }
 
     .form-panel input:focus,
-    .form-panel select:focus,
-    .form-panel textarea:focus {
+    .form-panel select:focus {
       border-color: #007bff;
       box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
     }
 
-    .form-panel textarea {
-      resize: none;
-      height: 80px;
-    }
-
-    .form-panel input[type="file"] {
-      border: none;
-      padding: 5px;
-    }
-
-    #downloadBtn {
-      background: #007bff;
-      color: white;
-      padding: 12px;
-      border: none;
+    .form-panel button {
+      display: block;
+      width: 100%;
+      padding: 10px;
       border-radius: 8px;
       font-size: 16px;
+      background: #007bff;
+      color: white;
+      border: none;
       cursor: pointer;
       transition: background 0.2s;
-      margin-top: 10px;
     }
 
-    #downloadBtn:hover {
+    .form-panel button:hover {
       background: #0056b3;
     }
 
+    /* Preview panel */
     .preview-panel {
       width: 800px;
       height: 400px;
       position: relative;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
@@ -202,18 +158,6 @@ color:#ffffff;
       z-index: 1;
     }
 
-    .profile-pic {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      object-fit: cover;
-      position: absolute;
-      top: 30px;
-      left: 545px;
-      border: 2px solid white;
-      z-index: 2;
-    }
-
     .overlay {
       position: absolute;
       z-index: 3;
@@ -222,173 +166,127 @@ color:#ffffff;
 
     #certName {
       width: 320px;
-      top: 140px;
+      top: 100px;
       left: 435px;
-      font-size: 16px;
+      font-size: 26px;
       font-weight: bold;
       text-align: center;
     }
 
-    #certDesc {
-      top: 160px;
-      left: 435px;
-      width: 80%;
-      font-size: 12px;
-      text-align: left;
-      padding: 15px;
-      max-width: 300px;
-    }
-
-    #certFrom, #certDate {
+    #certFrom {
+      bottom: 45px;
+      left: 420px;
       width: 320px;
       font-size: 12px;
       text-align: center;
       padding: 0 15px;
     }
 
-    #certFrom {
-      bottom: 45px;
-      left: 420px;
-    }
-
     #certDate {
       bottom: 25px;
-      left: 420px;
+      left: 440px;
+      width: 320px;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    footer p {
+      margin-top: 30px;
+      padding: 20px;
+      text-align: center;
+      color: #000000;
+      font-size: 14px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Left Panel -->
-    <div class="form-panel">
-      <label for="awardeeName">Awardee name:</label>
-      <input type="text" id="awardeeName" placeholder="Enter recipient name" />
 
-      <label for="profilePic">Upload profile picture:</label>
-      <input type="file" id="profilePic" accept="image/*" />
+  <div class="mobile-warning">
+    <h2>We're working on it!</h2>
+    <p>This page is not yet optimized for mobile devices.<br>
+    For the best experience, please access it from a desktop.<br>
+    Thanks for your patience!</p>
+  </div>
 
-      <label for="awardType">Select recognition card:</label>
-      <select id="awardType">
-        <option value="pillar">Pillar of Strength</option>
-        <option value="helping">Helping Hand</option>
-        <option value="shining">Shining Star</option>
-        <option value="wisdom">Beacon of Wisdom</option>
-        <option value="compass">Trusted Compass</option>
-        <option value="standard">True Standard-Bearer</option>
-        <option value="mentor">Guiding Mentor</option>
-        <option value="inspiration">Source of Inspiration</option>
-      </select>
+  <div class="main-content">
+    <h1>Appreciation cards</h1>
+    <p class="description">
+      Thank you for taking time out to appreciate your peers. Fill in the required details, download the card and share it in Mail or Slack.
+    </p>
 
-      <label for="description">Description:</label>
-      <textarea id="description" maxlength="490" placeholder="Note of appreciation"></textarea>
+    <div class="container">
+      <!-- Left Panel -->
+      <div class="form-panel">
+        <label for="awardeeName">Awardee name:</label>
+        <input type="text" id="awardeeName" placeholder="Enter recipient name" />
 
-      <label for="fromName">Your name:</label>
-      <input type="text" id="fromName" placeholder="Your name" />
+        <label for="awardType">Select appreciation card:</label>
+        <select id="awardType">
+          <option value="Lifeguard">The Lifeguard</option>
+          <option value="Monk">The Monk</option>
+          <option value="Spark">The Spark</option>
+          <option value="Knight">The Knight</option>
+          <option value="Funone">The Fun One</option>
+        </select>
 
-      <button id="downloadBtn">Download recognition card</button>
-    </div>
+        <label for="fromName">Your name:</label>
+        <input type="text" id="fromName" placeholder="Your name" />
 
-    <!-- Right Panel -->
-    <div id="previewPanel" class="preview-panel">
-      <img
-        id="certImage"
-        crossorigin="anonymous"
-        src="https://res.cloudinary.com/dkb0gpqsk/image/upload/v1748611741/Pillar_of_strength_mrkwxd.png"
-        alt="Certificate Background"
-      />
-      <img
-        id="profilePreview"
-        crossorigin="anonymous"
-        class="profile-pic"
-        src=""
-        alt="Profile Picture"
-        style="display: none;"
-      />
-      <div class="overlay" id="certName">Awardee Name</div>
-      <div class="overlay" id="certDesc">A note of appreciation to share why this meant so much and the impact it had...</div>
-      <div class="overlay" id="certFrom">Given by: Your Name</div>
-      <div class="overlay" id="certDate"></div>
+        <button id="downloadBtn">Download recognition card</button>
+      </div>
+
+      <!-- Right Panel -->
+      <div id="previewPanel" class="preview-panel">
+        <img id="certImage" crossorigin="anonymous" src="" alt="Certificate Background" />
+        <div class="overlay" id="certName">Awardee Name</div>
+        <div class="overlay" id="certFrom">Given by: Your Name</div>
+        <div class="overlay" id="certDate"></div>
+      </div>
     </div>
   </div>
-<footer>
-<style>
-p1{
-margin-top:30px;
-padding:20px; 
-text-align: center;
-color:#b1b1b1; 
-text-size:14px;
-}
-</style>
-  <p1> Built by Adobe Design for all with ❤️ </p1>
 
-</footer>
-  </div>
+  <footer>
+    <p>Built by Adobe Design for all with ❤️</p>
+  </footer>
 
   <script>
     const awardeeNameInput = document.getElementById("awardeeName");
-    const profilePicInput = document.getElementById("profilePic");
     const awardTypeSelect = document.getElementById("awardType");
-    const descriptionInput = document.getElementById("description");
     const fromNameInput = document.getElementById("fromName");
     const downloadBtn = document.getElementById("downloadBtn");
 
     const certImage = document.getElementById("certImage");
-    const profilePreview = document.getElementById("profilePreview");
     const certName = document.getElementById("certName");
-    const certDesc = document.getElementById("certDesc");
     const certFrom = document.getElementById("certFrom");
     const certDate = document.getElementById("certDate");
 
     const certificateImages = {
-      pillar: "https://res.cloudinary.com/dkb0gpqsk/image/upload/v1748611741/Pillar_of_strength_mrkwxd.png",
-      helping: "https://res.cloudinary.com/dkb0gpqsk/image/upload/v1748611750/Helping_Hand_smnje4.png",
-      shining: "https://res.cloudinary.com/dkb0gpqsk/image/upload/v1748611751/Shining_star_qofg44.png",
-      wisdom: "https://res.cloudinary.com/dkb0gpqsk/image/upload/v1748611741/Beacon_of_wisdom_mpodbf.png",
-      compass: "https://res.cloudinary.com/dkb0gpqsk/image/upload/v1748611744/Trusted_Compass_q9oqln.png",
-      standard: "https://res.cloudinary.com/dkb0gpqsk/image/upload/v1748611743/True_standard_bearer_kxxucm.png",
-      mentor: "https://res.cloudinary.com/dkb0gpqsk/image/upload/v1748611742/Guiding_Mentor_v7on4q.png",
-      inspiration: "https://res.cloudinary.com/dkb0gpqsk/image/upload/v1748611751/Source_of_Inspiration_egd94o.png",
+      Lifeguard: "https://res.cloudinary.com/dkb0gpqsk/image/upload/Lifeguard_thrs9n.png",
+      Monk: "https://res.cloudinary.com/dkb0gpqsk/image/upload/Monk_vkljbv.png",
+      Knight: "https://res.cloudinary.com/dkb0gpqsk/image/upload/Knight_ghejyd.png",
+      Spark: "https://res.cloudinary.com/dkb0gpqsk/image/upload/Spark_stmhq8.png",
+      Funone: "https://res.cloudinary.com/dkb0gpqsk/image/upload/Funone_suy5sk.png",
     };
 
+    // Set today's date
     const today = new Date();
-    const formattedDate = today.toLocaleDateString("en-GB", {
+    certDate.innerText = today.toLocaleDateString("en-GB", {
       day: "2-digit",
       month: "short",
       year: "numeric",
     });
-    certDate.innerText = formattedDate;
 
     function updatePreview() {
       certName.innerText = awardeeNameInput.value || "Awardee Name";
-      certDesc.innerText = descriptionInput.value || "Description goes here...";
       certFrom.innerText = fromNameInput.value ? `Given by: ${fromNameInput.value}` : "Given by: Your Name";
 
       const selectedAward = awardTypeSelect.value;
-      const imageUrl = certificateImages[selectedAward];
-
-      if (imageUrl) {
-        certImage.setAttribute("crossorigin", "anonymous");
-        certImage.src = imageUrl;
-      }
+      certImage.src = certificateImages[selectedAward] || "";
     }
 
     awardeeNameInput.addEventListener("input", updatePreview);
-    descriptionInput.addEventListener("input", updatePreview);
     fromNameInput.addEventListener("input", updatePreview);
     awardTypeSelect.addEventListener("change", updatePreview);
-
-    profilePicInput.addEventListener("change", (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function (event) {
-          profilePreview.src = event.target.result;
-          profilePreview.style.display = "block";
-        };
-        reader.readAsDataURL(file);
-      }
-    });
 
     downloadBtn.addEventListener("click", () => {
       html2canvas(document.getElementById("previewPanel"), {
@@ -396,30 +294,31 @@ text-size:14px;
         useCORS: true
       }).then(canvas => {
         const link = document.createElement('a');
-        link.download = 'certificate.png';
+        link.download = 'Thankyou.png';
         link.href = canvas.toDataURL();
         link.click();
+
+        const generationData = {
+          awardeeName: awardeeNameInput.value || "N/A",
+          awardType: awardTypeSelect.value || "N/A",
+          certImage: canvas.toDataURL(),
+          fromName: fromNameInput.value || "N/A",
+          date: new Date().toLocaleString()
+        };
+
+        fetch("https://script.google.com/macros/s/AKfycbx4MO3_C7pD2JBaGUH3weyPIXVab9EjEA8NwjQnXe59FROOEwOK48fA_KgUxyHUoBUZ/exec", {
+          method: "POST",
+          body: JSON.stringify(generationData),
+          headers: { "Content-Type": "application/json" }
+        })
+        .then(res => res.json())
+        .then(response => console.log("Excel saved:", response))
+        .catch(err => console.error("Error saving to Excel:", err));
       });
-      const generationData = {
-  awardeeName: awardeeNameInput.value || "N/A",
-  awardType: awardTypeSelect.value || "N/A",
-  certImage: canvas.toDataURL(), // Full base64 PNG
-  fromName: fromNameInput.value || "N/A",
-  date: new Date().toLocaleString()
-};
-      fetch("https://script.google.com/macros/s/AKfycbx4MO3_C7pD2JBaGUH3weyPIXVab9EjEA8NwjQnXe59FROOEwOK48fA_KgUxyHUoBUZ/exec", {
-  method: "POST",
-  body: JSON.stringify(generationData),
-  headers: {
-    "Content-Type": "application/json"
-  }
-})
-.then(res => res.json())
-.then(response => {
-  console.log("Excel saved:", response);
-})
-.catch(err => console.error("Error saving to Excel:", err));
     });
+
+    // Initialize preview on load
+    updatePreview();
   </script>
 </body>
 </html>
