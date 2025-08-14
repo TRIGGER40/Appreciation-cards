@@ -770,72 +770,10 @@
              
              // Android-specific download handling
              if (isAndroid) {
-               console.log('Android detected, showing certificate for screenshot');
-               // Android: Show certificate and prompt for screenshot (most reliable method)
+               console.log('Android detected, opening certificate image in new tab');
+               // Android: Open high-quality certificate image in new tab
                const dataUrl = canvas.toDataURL('image/png', 1.0);
-               alert('Your certificate is ready! Please take a screenshot of the certificate that will appear in the next window.');
-               const newWindow = window.open('', '_blank', 'width=800,height=600');
-               newWindow.document.write(`
-                 <!DOCTYPE html>
-                 <html>
-                 <head>
-                   <title>${fileName}</title>
-                   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                   <style>
-                     body { 
-                       margin: 0; 
-                       padding: 20px; 
-                       background: white; 
-                       text-align: center; 
-                       font-family: Arial, sans-serif;
-                     }
-                     .certificate-container { 
-                       max-width: 800px; 
-                       margin: 0 auto; 
-                       border: 2px solid #007bff;
-                       border-radius: 10px;
-                       overflow: hidden;
-                     }
-                     img { 
-                       width: 100%; 
-                       height: auto; 
-                       display: block;
-                     }
-                     .instructions { 
-                       margin: 20px 0; 
-                       padding: 15px; 
-                       background: #f8f9fa; 
-                       border-radius: 8px; 
-                       border: 1px solid #dee2e6;
-                     }
-                     .close-btn { 
-                       display: inline-block; 
-                       padding: 10px 20px; 
-                       background: #6c757d; 
-                       color: white; 
-                       text-decoration: none; 
-                       border-radius: 6px; 
-                       margin: 10px;
-                       cursor: pointer;
-                     }
-                   </style>
-                 </head>
-                 <body>
-                   <div class="instructions">
-                     <h3>📸 Take a Screenshot</h3>
-                     <p><strong>Step 1:</strong> Take a screenshot of this certificate using your device's screenshot function</p>
-                     <p><strong>Step 2:</strong> The screenshot will be saved to your device's gallery</p>
-                     <p><strong>Step 3:</strong> You can then share it via email, Slack, or any other app</p>
-                   </div>
-                   <div class="certificate-container">
-                     <img src="${dataUrl}" alt="Appreciation Card" />
-                   </div>
-                   <br>
-                   <a href="#" onclick="window.close()" class="close-btn">Close Window</a>
-                 </body>
-                 </html>
-               `);
-               newWindow.document.close();
+               window.open(dataUrl, '_blank');
              } else {
                link.click();
              }
@@ -1049,6 +987,12 @@
         downloadCard(document.getElementById("mobilePreviewPanel"), 'Thankyou.png', true);
       }
     });
+    
+    // Change button text for Android
+    const isAndroid = /Android/i.test(navigator.userAgent);
+    if (isAndroid) {
+      mobileDownloadBtn.textContent = "Open card in a new tab";
+    }
 
     // Initialize previews on load
     updateDesktopPreview();
