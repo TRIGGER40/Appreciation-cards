@@ -287,34 +287,38 @@
     fromNameInput.addEventListener("input", updatePreview);
     awardTypeSelect.addEventListener("change", updatePreview);
 
-    downloadBtn.addEventListener("click", () => {
-      html2canvas(document.getElementById("previewPanel"), {
-        scale: 2,
-        useCORS: true
-      }).then(canvas => {
-        const link = document.createElement('a');
-        link.download = 'Thankyou.png';
-        link.href = canvas.toDataURL();
-        link.click();
+downloadBtn.addEventListener("click", () => {
+  // Step 1: Download PNG
+  html2canvas(document.getElementById("previewPanel"), {
+    scale: 2,
+    useCORS: true
+  }).then(canvas => {
+    const link = document.createElement('a');
+    link.download = 'Thankyou.png';
+    link.href = canvas.toDataURL();
+    link.click();
 
-       const generationData = {
-  awardeeName: awardeeNameInput.value || "N/A",
-  awardType: awardTypeSelect.value || "N/A",
-  fromName: fromNameInput.value || "N/A",
-  date: new Date().toLocaleString()
-};
-console.log(generationData); 
+    // Step 2: Send data to Google Sheets
+    const generationData = {
+      awardeeName: awardeeNameInput.value || "N/A",
+      awardType: awardTypeSelect.value || "N/A",
+      fromName: fromNameInput.value || "N/A",
+      date: new Date().toLocaleString()
+    };
 
-      fetch("https://script.google.com/macros/s/AKfycbz1TB2ARknQH9FYqFNA2JTm73X39P2GabUh8x_A7jhpPEQpPxLbN5OmoeZMLXnmWDt_FQ/exec", {
-  method: "POST",
-  body: JSON.stringify(generationData),
-  headers: { "Content-Type": "application/json" }
-})
-        .then(res => res.json())
-        .then(response => console.log("Excel saved:", response))
-        .catch(err => console.error("Error saving to Excel:", err));
-      });
-    });
+    console.log("Sending data:", generationData);
+
+    fetch("YOUR_WEB_APP_URL_HERE", {
+      method: "POST",
+      body: JSON.stringify(generationData),
+      headers: { "Content-Type": "application/json" }
+    })
+    .then(res => res.json())
+    .then(response => console.log("Sheet updated:", response))
+    .catch(err => console.error("Error saving to sheet:", err));
+  });
+});
+
 
     // Initialize preview on load
     updatePreview();
