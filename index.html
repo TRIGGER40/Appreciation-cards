@@ -773,7 +773,24 @@
                console.log('Android detected, opening certificate image in new tab');
                // Android: Open high-quality certificate image in new tab
                const dataUrl = canvas.toDataURL('image/png', 1.0);
-               window.open(dataUrl, '_blank');
+               const newWindow = window.open('', '_blank');
+               newWindow.document.write(`
+                 <!DOCTYPE html>
+                 <html>
+                 <head>
+                   <title>Appreciation Card</title>
+                   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                   <style>
+                     body { margin: 0; padding: 20px; background: white; text-align: center; }
+                     img { max-width: 100%; height: auto; border: 1px solid #ccc; }
+                   </style>
+                 </head>
+                 <body>
+                   <img src="${dataUrl}" alt="Appreciation Card" />
+                 </body>
+                 </html>
+               `);
+               newWindow.document.close();
              } else {
                link.click();
              }
