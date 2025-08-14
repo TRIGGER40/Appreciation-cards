@@ -735,84 +735,129 @@
         mobileCertDate.style.fontSize = '12px';
       }
       
-      html2canvas(previewElement, {
-        scale: scale,
-        useCORS: true,
-        allowTaint: true,
-        foreignObjectRendering: true,
-        width: isMobile ? 800 : undefined,
-        height: isMobile ? 400 : undefined,
-        backgroundColor: '#ffffff',
-        logging: false
-      }).then(canvas => {
-        // Restore original mobile styling
-        if (isMobile) {
-          const mobilePreviewPanel = document.getElementById("mobilePreviewPanel");
-          const mobileCertName = document.getElementById("mobileCertName");
-          const mobileCertFrom = document.getElementById("mobileCertFrom");
-          const mobileCertDate = document.getElementById("mobileCertDate");
+      // Debug: Log the preview element
+      console.log('Preview element:', previewElement);
+      console.log('Is mobile:', isMobile);
+      
+      // Check if image is loaded
+      const img = previewElement.querySelector('img');
+      console.log('Image element:', img);
+      console.log('Image src:', img ? img.src : 'No image found');
+      console.log('Image complete:', img ? img.complete : 'No image found');
+      console.log('Image natural width:', img ? img.naturalWidth : 'No image found');
+      
+      // Ensure image is loaded before capture
+      if (img && !img.complete) {
+        console.log('Waiting for image to load...');
+        img.onload = function() {
+          console.log('Image loaded, proceeding with capture...');
+          captureCanvas();
+        };
+        img.onerror = function() {
+          console.log('Image failed to load, proceeding anyway...');
+          captureCanvas();
+        };
+      } else {
+        console.log('Image already loaded or no image, proceeding...');
+        captureCanvas();
+      }
+      
+      function captureCanvas() {
+        // Simple approach - try html2canvas directly
+        html2canvas(previewElement, {
+          scale: scale,
+          useCORS: false,
+          allowTaint: false,
+          foreignObjectRendering: false,
+          backgroundColor: '#ffffff',
+          logging: true,
+          onclone: function(clonedDoc) {
+            // Ensure the cloned element has proper dimensions
+            const clonedElement = clonedDoc.querySelector('#mobilePreviewPanel') || clonedDoc.querySelector('#previewPanel');
+            if (clonedElement) {
+              clonedElement.style.width = isMobile ? '800px' : '800px';
+              clonedElement.style.height = isMobile ? '400px' : '400px';
+              clonedElement.style.maxWidth = 'none';
+              clonedElement.style.aspectRatio = 'none';
+              console.log('Cloned element styled:', clonedElement);
+            }
+          }
+        })
+        .then(canvas => {
+          // Restore original mobile styling
+          if (isMobile) {
+            const mobilePreviewPanel = document.getElementById("mobilePreviewPanel");
+            const mobileCertName = document.getElementById("mobileCertName");
+            const mobileCertFrom = document.getElementById("mobileCertFrom");
+            const mobileCertDate = document.getElementById("mobileCertDate");
+            
+            mobilePreviewPanel.style.width = originalWidth;
+            mobilePreviewPanel.style.height = originalHeight;
+            mobilePreviewPanel.style.maxWidth = originalMaxWidth;
+            mobilePreviewPanel.style.aspectRatio = originalAspectRatio;
+            mobileCertName.style.fontSize = originalNameFontSize;
+            mobileCertFrom.style.fontSize = originalFromFontSize;
+            mobileCertDate.style.fontSize = originalDateFontSize;
+          }
           
-          mobilePreviewPanel.style.width = originalWidth;
-          mobilePreviewPanel.style.height = originalHeight;
-          mobilePreviewPanel.style.maxWidth = originalMaxWidth;
-          mobilePreviewPanel.style.aspectRatio = originalAspectRatio;
-          mobileCertName.style.fontSize = originalNameFontSize;
-          mobileCertFrom.style.fontSize = originalFromFontSize;
-          mobileCertDate.style.fontSize = originalDateFontSize;
-        }
-        
-        const link = document.createElement('a');
-        link.download = fileName;
-        link.href = canvas.toDataURL();
-        link.click();
+          const link = document.createElement('a');
+          link.download = fileName;
+          link.href = canvas.toDataURL('image/png', 1.0);
+          link.click();
 
-        // Save to Google Sheets using iframe form submission (no CORS, no redirect)
-        const awardeeName = isMobile ? mobileAwardeeNameInput.value : awardeeNameInput.value || "N/A";
-        const awardType = isMobile ? mobileAwardTypeSelect.value : awardTypeSelect.value || "N/A";
-        const fromName = isMobile ? mobileFromNameInput.value : fromNameInput.value || "N/A";
-        const currentDate = new Date().toLocaleString();
-        
-        // Create a hidden iframe for form submission
-        const iframe = document.createElement('iframe');
-        iframe.style.display = 'none';
-        iframe.name = 'google-sheets-iframe';
-        document.body.appendChild(iframe);
-        
-        // Create a hidden form and submit it to the iframe
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = 'https://script.google.com/macros/s/AKfycbwv-s7nlQLyNUJVz61o7mZAaNyRX3KeaSctom7vgSlpokxPtwZ70vQNAetF6Q8JizUv9A/exec';
-        form.target = 'google-sheets-iframe';
-        form.style.display = 'none';
-        
-        // Add form fields
-        const fields = [
-          { name: 'awardeeName', value: awardeeName },
-          { name: 'awardType', value: awardType },
-          { name: 'fromName', value: fromName },
-          { name: 'date', value: currentDate }
-        ];
-        
-        fields.forEach(field => {
-          const input = document.createElement('input');
-          input.type = 'hidden';
-          input.name = field.name;
-          input.value = field.value;
-          form.appendChild(input);
+          // Save to Google Sheets after successful download
+          setTimeout(() => {
+            const awardeeName = isMobile ? mobileAwardeeNameInput.value : awardeeNameInput.value || "N/A";
+            const awardType = isMobile ? mobileAwardTypeSelect.value : awardTypeSelect.value || "N/A";
+            const fromName = isMobile ? mobileFromNameInput.value : fromNameInput.value || "N/A";
+            const currentDate = new Date().toLocaleString();
+            
+            // Create a hidden iframe for form submission
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.name = 'google-sheets-iframe';
+            document.body.appendChild(iframe);
+            
+            // Create a hidden form and submit it to the iframe
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = 'https://script.google.com/macros/s/AKfycbwv-s7nlQLyNUJVz61o7mZAaNyRX3KeaSctom7vgSlpokxPtwZ70vQNAetF6Q8JizUv9A/exec';
+            form.target = 'google-sheets-iframe';
+            form.style.display = 'none';
+            
+            // Add form fields
+            const fields = [
+              { name: 'awardeeName', value: awardeeName },
+              { name: 'awardType', value: awardType },
+              { name: 'fromName', value: fromName },
+              { name: 'date', value: currentDate }
+            ];
+            
+            fields.forEach(field => {
+              const input = document.createElement('input');
+              input.type = 'hidden';
+              input.name = field.name;
+              input.value = field.value;
+              form.appendChild(input);
+            });
+            
+            // Submit the form to the iframe
+            document.body.appendChild(form);
+            form.submit();
+            
+            // Clean up after a short delay
+            setTimeout(() => {
+              if (document.body.contains(form)) document.body.removeChild(form);
+              if (document.body.contains(iframe)) document.body.removeChild(iframe);
+            }, 1000);
+            
+            console.log("Excel data submitted via iframe form");
+          }, 500); // Delay sheets update to ensure download completes first
+        })
+        .catch(error => {
+          console.error("Error generating certificate:", error);
+          alert("There was an error generating your certificate. Please try again.");
         });
-        
-        // Submit the form to the iframe
-        document.body.appendChild(form);
-        form.submit();
-        
-        // Clean up after a short delay
-        setTimeout(() => {
-          document.body.removeChild(form);
-          document.body.removeChild(iframe);
-        }, 1000);
-        
-        console.log("Excel data submitted via iframe form");
-      });
     }
 
     // Desktop event listeners
