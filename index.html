@@ -308,7 +308,7 @@ downloadBtn.addEventListener("click", () => {
 
     console.log("Sending data:", generationData);
 
-    fetch("https://script.google.com/macros/s/AKfycbxVJCyy_VSv4ocMRIg-lw9dNZ7zFYDLaTkryoz-QfSv9Fa91w-V8Ms3bRJ6M3GSZpLPtg/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbzxQQCZnGaTe7nGIO-J0K3I7qZpVXPfLLNwE4cL06lZ7UWsGb10jXxCER5IzM2T25t3nw/exec", {
       method: "POST",
       body: JSON.stringify(generationData),
       headers: { "Content-Type": "application/json" }
