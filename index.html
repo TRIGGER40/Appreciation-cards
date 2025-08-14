@@ -735,12 +735,17 @@
         mobileCertDate.style.fontSize = '12px';
       }
       
-      // Try with minimal html2canvas options
+      // Detect Android and use appropriate settings
+      const isAndroid = /Android/i.test(navigator.userAgent);
+      console.log('Is Android:', isAndroid);
+      
+      // Try with minimal html2canvas options - keep CORS enabled for images
       html2canvas(previewElement, {
         scale: 1,
         useCORS: true,
         allowTaint: true,
-        backgroundColor: '#ffffff'
+        backgroundColor: '#ffffff',
+        logging: isAndroid ? true : false
       })
         .then(canvas => {
           // Restore original mobile styling
@@ -759,10 +764,31 @@
             mobileCertDate.style.fontSize = originalDateFontSize;
           }
           
-          const link = document.createElement('a');
-          link.download = fileName;
-          link.href = canvas.toDataURL('image/png', 1.0);
-          link.click();
+                                                 const link = document.createElement('a');
+             link.download = fileName;
+             link.href = canvas.toDataURL('image/png', 1.0);
+             
+             // Android-specific download handling for fallback
+             if (isAndroid) {
+               try {
+                 // Try to trigger download using blob
+                 canvas.toBlob(function(blob) {
+                   const url = URL.createObjectURL(blob);
+                   const link = document.createElement('a');
+                   link.href = url;
+                   link.download = fileName;
+                   document.body.appendChild(link);
+                   link.click();
+                   document.body.removeChild(link);
+                   URL.revokeObjectURL(url);
+                 }, 'image/png');
+               } catch (e) {
+                 console.log('Android fallback blob method failed, trying direct download');
+                 link.click();
+               }
+             } else {
+               link.click();
+             }
 
           // Save to Google Sheets after successful download
           setTimeout(() => {
@@ -816,12 +842,14 @@
         .catch(error => {
           console.error("First attempt failed:", error);
           
-          // Fallback: try with even simpler options
+          // Fallback: try with even simpler options but keep CORS for images
           html2canvas(previewElement, {
             scale: 1,
-            useCORS: false,
-            allowTaint: false,
-            backgroundColor: '#ffffff'
+            useCORS: true,
+            allowTaint: true,
+            backgroundColor: '#ffffff',
+            width: isAndroid ? 800 : undefined,
+            height: isAndroid ? 400 : undefined
           })
           .then(canvas => {
             // Restore original mobile styling
@@ -843,7 +871,28 @@
             const link = document.createElement('a');
             link.download = fileName;
             link.href = canvas.toDataURL('image/png', 1.0);
-            link.click();
+            
+            // Android-specific download handling for fallback
+            if (isAndroid) {
+              try {
+                // Try to trigger download using blob
+                canvas.toBlob(function(blob) {
+                  const url = URL.createObjectURL(blob);
+                  const link = document.createElement('a');
+                  link.href = url;
+                  link.download = fileName;
+                  document.body.appendChild(link);
+                  link.click();
+                  document.body.removeChild(link);
+                  URL.revokeObjectURL(url);
+                }, 'image/png');
+              } catch (e) {
+                console.log('Android fallback blob method failed, trying direct download');
+                link.click();
+              }
+            } else {
+              link.click();
+            }
 
             // Save to Google Sheets after successful download
             setTimeout(() => {
