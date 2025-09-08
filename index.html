@@ -1033,7 +1033,9 @@
     awardTypeSelect.addEventListener("change", updateDesktopPreview);
 
     downloadBtn.addEventListener("click", () => {
-      downloadCard(document.getElementById("previewPanel"), 'Thankyou.png', false);
+  const awardeeName = awardeeNameInput.value.trim() || "Friend"; // fallback if empty
+  const fileName = `Thankyou-${awardeeName}.png`;
+  downloadCard(document.getElementById("previewPanel"), fileName, false);
     });
 
     // Mobile event listeners
